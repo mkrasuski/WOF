@@ -8,17 +8,17 @@ import java.util.Arrays;
  *  {@link WheelOfFortune} is class with game logic. Has nothing to GUI.
  *
  */
-public class WheelOfFortune {
+class WheelOfFortune {
 
     public enum GameState {
-        LOOSE, WIN, NEXT;
+        LOOSE, WIN, NEXT
     }
 
     /**
      *  secretProperty stores secret to guess
      */
     private StringProperty secret = new SimpleStringProperty("");
-    public StringProperty secretProperty() {
+    StringProperty secretProperty() {
         return secret;
     }
 
@@ -26,19 +26,19 @@ public class WheelOfFortune {
      *  guessProperty stores current state of guessed letters
      */
     private StringProperty guess = new SimpleStringProperty( "");
-    public StringProperty guessProperty() { return guess; }
+    StringProperty guessProperty() { return guess; }
 
     /**
      * scoreProperty stores current score
      */
     private IntegerProperty score = new SimpleIntegerProperty(0);
-    public IntegerProperty scoreProperty() { return score; }
+    IntegerProperty scoreProperty() { return score; }
 
     /**
      *  faultsProperty stores number of faults. Player looses after 3 faults
      */
     private IntegerProperty faults = new SimpleIntegerProperty( 0);
-    public IntegerProperty faultsProperty() { return faults; }
+    IntegerProperty faultsProperty() { return faults; }
 
     WheelOfFortune(String aSecret) {
 
@@ -58,7 +58,7 @@ public class WheelOfFortune {
         int found = 0;
         String guessValue = guess.get();
         String secretValue = secret.get();
-        StringBuffer b = new StringBuffer();
+        StringBuilder b = new StringBuilder();
 
         for (int n = 0; n < secretValue.length(); n++) {
 
@@ -97,7 +97,7 @@ public class WheelOfFortune {
         return "ABCDEFGHIJKLMNOPRSTUVWXYZĄŃŁÓŹŻĆĘ".contains(String.valueOf(ch));
     }
 
-    String stringOfSpaces(int count) {
+    private String stringOfSpaces(int count) {
         char[] chars = new char[count];
         Arrays.fill(chars, ' ');
         return String.valueOf(chars);
