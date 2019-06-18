@@ -26,10 +26,10 @@ import javafx.util.Duration;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-public class Game extends WheelOfFortune {
+class Game extends WheelOfFortune {
 
     private final int SEGMENTS = 10;
-    private final int scoreOfSegment[] = {
+    private final int[] scoreOfSegment = {
             0, 100, 1000, 500, 300, 0, 1000, 300, 5000, 800
     };
 
@@ -38,7 +38,7 @@ public class Game extends WheelOfFortune {
     }
 
 
-    Node createWheelArc(double angle, int index, Color c) {
+    private Node createWheelArc(double angle, int index, Color c) {
 
         Arc arc = new Arc();
         arc.setType(ArcType.ROUND);
@@ -47,10 +47,11 @@ public class Game extends WheelOfFortune {
         arc.setRadiusY(150);
         arc.setFill(c);
         arc.getTransforms().add(new Rotate(index*angle,0,0));
+
         return arc;
     }
 
-    Node createWheelLabel(double angle, int index, String text) {
+    private Node createWheelLabel(double angle, int index, String text) {
 
         Label label = new Label(text);
         label.setText(text);
@@ -58,20 +59,22 @@ public class Game extends WheelOfFortune {
         label.setTranslateX(90);
         label.getTransforms().add(new Rotate(angle*(index + 0.35), -90, 0));
         label.toFront();
+
         return label;
     }
 
-    Node createIndicator() {
+    private Node createIndicator() {
 
         Rectangle indicator = new Rectangle(10, 10);
         indicator.setFill(Color.BLACK);
         indicator.setY(-5);
         indicator.setX(150);
         indicator.setRotate(45);
+
         return indicator;
     }
 
-    Node createWheel() {
+    private Node createWheel() {
 
         double angle = 360.0 / SEGMENTS;
 
@@ -91,7 +94,7 @@ public class Game extends WheelOfFortune {
         return wheel;
     }
 
-    void rollWheel(Node wheel, final Consumer<Integer> onEnd) {
+    private void rollWheel(final Node wheel, final Consumer<Integer> onEnd) {
 
         SequentialTransition animation = new SequentialTransition();
 
@@ -134,7 +137,7 @@ public class Game extends WheelOfFortune {
 
         final Button rollButton = new Button("Roll!");
         rollButton.setPrefSize(200, 50);
-        rollButton.setFont(new Font(30));
+        rollButton.setFont(Font.font(30));
         rollButton.setOnAction(event -> {
 
             rollButton.setDisable(true);
@@ -167,15 +170,14 @@ public class Game extends WheelOfFortune {
         stage.setScene(scene);
         stage.setMinHeight(500);
         stage.setMinWidth(500);
+
         return stage;
     }
 
-    Node createScoreLabel() {
-
-        Font font = new Font(20);
+    private Node createScoreLabel() {
 
         Label scoreLabel = new Label();
-        scoreLabel.setFont(font);
+        scoreLabel.setFont(Font.font(20));
         scoreLabel.textProperty().bind(
                 Bindings.format("Score: %d, Faults %d/3",
                         scoreProperty(),
@@ -219,7 +221,7 @@ public class Game extends WheelOfFortune {
         return flowPane;
     }
 
-    String askForInput(String promptText, String buttonText, Function<String,String> validate) {
+    private String askForInput(String promptText, String buttonText, Function<String, String> validate) {
 
         final Stage stage = new Stage();
         final BorderPane root = new BorderPane();
@@ -251,7 +253,7 @@ public class Game extends WheelOfFortune {
         return field.getText().trim();
     }
 
-    char askForLetter() {
+    private char askForLetter() {
 
         String letter = askForInput("Guess a letter and press ENTER...", "guess", str -> {
 
@@ -266,7 +268,7 @@ public class Game extends WheelOfFortune {
             }
 
             if (!validLetter(ch)) {
-                return "Should enter LETTER...";
+                return "Should enter valid LETTER...";
             }
 
             return null;
