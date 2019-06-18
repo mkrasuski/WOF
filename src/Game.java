@@ -46,7 +46,7 @@ class Game extends WheelOfFortune {
         arc.setRadiusX(150);
         arc.setRadiusY(150);
         arc.setFill(c);
-        arc.getTransforms().add(new Rotate(index*angle,0,0));
+        arc.getTransforms().add(new Rotate(index * angle, 0, 0));
 
         return arc;
     }
@@ -57,7 +57,7 @@ class Game extends WheelOfFortune {
         label.setText(text);
         label.setFont(new Font(15));
         label.setTranslateX(90);
-        label.getTransforms().add(new Rotate(angle*(index + 0.35), -90, 0));
+        label.getTransforms().add(new Rotate(angle * (index + 0.35), -90, 0));
         label.toFront();
 
         return label;
@@ -100,11 +100,11 @@ class Game extends WheelOfFortune {
 
         double angle = wheel.getRotate();
         double step = 15 + 5 * Math.random();
-        double speed = 20*step;
+        double speed = 20 * step;
 
         for (int k = 1; k <= 20; k++) {
 
-            RotateTransition rotation = new RotateTransition(Duration.millis(50 + 10*k),  wheel);
+            RotateTransition rotation = new RotateTransition(Duration.millis(50 + 10 * k), wheel);
             rotation.setInterpolator(k < 20 ? Interpolator.LINEAR : Interpolator.EASE_OUT);
             rotation.setFromAngle(angle);
             angle += speed;
@@ -117,7 +117,7 @@ class Game extends WheelOfFortune {
             // handler is run in main loop, outside of animation to overcome limitations of IllegalState
             Platform.runLater(() -> {
                 double a = wheel.getRotate() % 360.0;
-                int index = SEGMENTS - 1 - (int)Math.floor(a / (360.0 / SEGMENTS));
+                int index = SEGMENTS - 1 - (int) Math.floor(a / (360.0 / SEGMENTS));
                 onEnd.accept(scoreOfSegment[index]);
             });
         });
@@ -195,7 +195,7 @@ class Game extends WheelOfFortune {
 
         String secretValue = secretProperty().get();
 
-        for (int n = 0; n < secretValue.length(); n++)  {
+        for (int n = 0; n < secretValue.length(); n++) {
 
             final char ch = secretValue.charAt(n);
 
@@ -211,7 +211,7 @@ class Game extends WheelOfFortune {
             final int i = n;
             label.textProperty().bind(
                     Bindings.createStringBinding(
-                            () -> guessProperty().get().substring(i,i+1),
+                            () -> guessProperty().get().substring(i, i + 1),
                             guessProperty()));
 
             label.setAlignment(Pos.CENTER);
@@ -236,8 +236,7 @@ class Game extends WheelOfFortune {
             if (error != null) {
                 label.setText(error);
                 label.setTextFill(Color.RED);
-            }
-            else {
+            } else {
                 stage.close();
             }
         });
