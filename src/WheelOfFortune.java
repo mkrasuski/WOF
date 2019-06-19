@@ -54,8 +54,8 @@ class WheelOfFortune {
 
         aSecret = aSecret.toUpperCase();
 
-        secretProperty().set(aSecret);
-        guessProperty().set(stringOfSpaces(aSecret.length()));
+        secret.set(aSecret);
+        guess.set(stringOfSpaces(aSecret.length()));
     }
 
     /**
@@ -108,9 +108,9 @@ class WheelOfFortune {
         return "ABCDEFGHIJKLMNOPRSTUVWXYZĄŃŁÓŹŻĆĘ".contains(String.valueOf(ch));
     }
 
-    private String stringOfSpaces(int count) {
+    private String stringOfSpaces(int len) {
 
-        char[] chars = new char[count];
+        char[] chars = new char[len];
         Arrays.fill(chars, ' ');
 
         return String.valueOf(chars);

@@ -40,7 +40,7 @@ class Game extends WheelOfFortune {
 
     private Node createWheelArc(double angle, int index, Color c) {
 
-        Arc arc = new Arc();
+        final Arc arc = new Arc();
         arc.setType(ArcType.ROUND);
         arc.setLength(angle);
         arc.setRadiusX(150);
@@ -53,7 +53,7 @@ class Game extends WheelOfFortune {
 
     private Node createWheelLabel(double angle, int index, String text) {
 
-        Label label = new Label(text);
+        final Label label = new Label(text);
         label.setText(text);
         label.setFont(new Font(15));
         label.setTranslateX(90);
@@ -65,7 +65,7 @@ class Game extends WheelOfFortune {
 
     private Node createIndicator() {
 
-        Rectangle indicator = new Rectangle(10, 10);
+        final Rectangle indicator = new Rectangle(10, 10);
         indicator.setFill(Color.BLACK);
         indicator.setY(-5);
         indicator.setX(150);
@@ -78,12 +78,12 @@ class Game extends WheelOfFortune {
 
         double angle = 360.0 / SEGMENTS;
 
-        Group wheel = new Group();
+        final Group wheel = new Group();
 
         for (int index = 0; index < SEGMENTS; index++) {
 
-            Node wheelArc = createWheelArc(angle, index, (index % 2) == 0 ? Color.CORAL : Color.LIGHTBLUE);
-            Node label = createWheelLabel(angle, index, String.valueOf(scoreOfSegment[index]));
+            final Node wheelArc = createWheelArc(angle, index, (index % 2) == 0 ? Color.CORAL : Color.LIGHTBLUE);
+            final Node label = createWheelLabel(angle, index, String.valueOf(scoreOfSegment[index]));
             wheel.getChildren().addAll(
                     wheelArc,
                     label);
@@ -104,7 +104,7 @@ class Game extends WheelOfFortune {
 
         for (int k = 1; k <= 20; k++) {
 
-            RotateTransition rotation = new RotateTransition(Duration.millis(50 + 10 * k), wheel);
+            final RotateTransition rotation = new RotateTransition(Duration.millis(50 + 10 * k), wheel);
             rotation.setInterpolator(k < 20 ? Interpolator.LINEAR : Interpolator.EASE_OUT);
             rotation.setFromAngle(angle);
             angle += speed;
@@ -159,13 +159,13 @@ class Game extends WheelOfFortune {
             });
         });
 
-        VBox box = new VBox(createScoreLabel(), rollButton);
+        final VBox box = new VBox(createScoreLabel(), rollButton);
         box.setSpacing(20);
         box.setAlignment(Pos.CENTER);
         root.setBottom(withMargin(new BorderPane(box), 20));
 
-        Stage stage = new Stage();
-        Scene scene = new Scene(root, 480, 640);
+        final Stage stage = new Stage();
+        final Scene scene = new Scene(root, 480, 640);
         stage.setTitle("Have fun!");
         stage.setScene(scene);
         stage.setMinHeight(500);
@@ -176,7 +176,7 @@ class Game extends WheelOfFortune {
 
     private Node createScoreLabel() {
 
-        Label scoreLabel = new Label();
+        final Label scoreLabel = new Label();
         scoreLabel.setFont(Font.font(20));
         scoreLabel.textProperty().bind(
                 Bindings.format("Score: %d, Faults %d/3",
@@ -188,7 +188,7 @@ class Game extends WheelOfFortune {
 
     private Node createLetterPane() {
 
-        FlowPane flowPane = new FlowPane();
+        final FlowPane flowPane = new FlowPane();
         flowPane.setAlignment(Pos.CENTER);
         flowPane.setHgap(10);
         flowPane.setVgap(10);
@@ -277,11 +277,13 @@ class Game extends WheelOfFortune {
     }
 
     private Node withMargin(Node node, double width) {
+
         BorderPane.setMargin(node, new Insets(width));
         return node;
     }
 
     private Node withMargin(Node node) {
+
         return withMargin(node, 8);
     }
 
