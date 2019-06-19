@@ -210,7 +210,7 @@ class Game extends WheelOfFortune {
             final int i = n;
             label.textProperty().bind(
                     Bindings.createStringBinding(
-                            () -> guessProperty().get().substring(i, i + 1),
+                            () -> String.valueOf(guessProperty().get().charAt(i)),
                             guessProperty()));
 
             label.setAlignment(Pos.CENTER);
