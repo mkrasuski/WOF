@@ -42,7 +42,7 @@ class Game extends WheelOfFortune {
         final BorderPane root = new BorderPane();
 
         root.setTop(centered(
-                withMargin(createLetterPane(), 20)));
+                withMargin(createLettersPane(), 20)));
 
         final Node wheel = createWheel();
         root.setCenter(new Group(wheel, createIndicator()));
@@ -85,7 +85,7 @@ class Game extends WheelOfFortune {
 
         return stage;
     }
-    
+
     private void rollWheel(final Node wheel, final Consumer<Integer> onEnd) {
 
         final SequentialTransition animation = new SequentialTransition();
@@ -185,7 +185,7 @@ class Game extends WheelOfFortune {
         return scoreLabel;
     }
 
-    private Node createLetterPane() {
+    private Node createLettersPane() {
 
         final FlowPane flowPane = new FlowPane();
         flowPane.setAlignment(Pos.CENTER);
@@ -287,6 +287,7 @@ class Game extends WheelOfFortune {
     }
 
     private Node centered(Node node) {
+
         BorderPane.setAlignment(node, Pos.CENTER);
         return node;
     }
