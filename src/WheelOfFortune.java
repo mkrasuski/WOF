@@ -24,7 +24,7 @@ class WheelOfFortune {
     }
 
     /**
-     * guessProperty stores current state of guessed letters
+     * guessProperty stores current state of guessed letters or space if letter is unknown
      */
     private StringProperty guess = new SimpleStringProperty("");
 
@@ -65,21 +65,22 @@ class WheelOfFortune {
      */
     GameState nextTurn(char letter, int scoreForLetter) {
 
-        int found = 0;
         String guessValue = guess.get();
         String secretValue = secret.get();
-        StringBuilder b = new StringBuilder();
+        StringBuilder newGuessValue = new StringBuilder();
 
+        int found = 0;
         for (int n = 0; n < secretValue.length(); n++) {
 
             if (letter == secretValue.charAt(n)) {
                 found++;
-                b.append(letter);
+                newGuessValue.append(letter);
             } else {
-                b.append(guessValue.charAt(n));
+                newGuessValue.append(guessValue.charAt(n));
             }
         }
-        guess.set(b.toString());
+
+        guess.set(newGuessValue.toString());
 
         score.set(score.get() + scoreForLetter * found);
 

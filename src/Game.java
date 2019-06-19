@@ -37,6 +37,85 @@ class Game extends WheelOfFortune {
         super(secret);
     }
 
+    Stage createGameScreen() {
+
+        final BorderPane root = new BorderPane();
+
+        root.setTop(centered(
+                withMargin(createLetterPane(), 20)));
+
+        final Node wheel = createWheel();
+        root.setCenter(new Group(wheel, createIndicator()));
+
+        final Button rollButton = new Button("Roll!");
+        rollButton.setPrefSize(200, 50);
+        rollButton.setFont(Font.font(30));
+        rollButton.setOnAction(event -> {
+
+            rollButton.setDisable(true);
+            rollWheel(wheel, score -> {
+
+                switch (nextTurn(askForLetter(), score)) {
+                    case WIN:
+                        new Alert(Alert.AlertType.NONE,
+                                "You have Won! Your score is " + scoreProperty().get(),
+                                ButtonType.OK).showAndWait();
+                        break;
+                    case LOOSE:
+                        new Alert(Alert.AlertType.WARNING,
+                                "You have lost! Your score is " + scoreProperty().get(),
+                                ButtonType.OK).showAndWait();
+                }
+
+                rollButton.setDisable(false);
+            });
+        });
+
+        final VBox box = new VBox(createScoreLabel(), rollButton);
+        box.setSpacing(20);
+        box.setAlignment(Pos.CENTER);
+        root.setBottom(withMargin(new BorderPane(box), 20));
+
+        final Stage stage = new Stage();
+        final Scene scene = new Scene(root, 480, 640);
+        stage.setTitle("Have fun!");
+        stage.setScene(scene);
+        stage.setMinHeight(500);
+        stage.setMinWidth(500);
+
+        return stage;
+    }
+    
+    private void rollWheel(final Node wheel, final Consumer<Integer> onEnd) {
+
+        final SequentialTransition animation = new SequentialTransition();
+
+        double angle = wheel.getRotate();
+        double step = 15 + 5 * Math.random();
+        double speed = 20 * step;
+
+        for (int k = 1; k <= 20; k++) {
+
+            final RotateTransition rotation = new RotateTransition(Duration.millis(50 + 10 * k), wheel);
+            rotation.setInterpolator(k < 20 ? Interpolator.LINEAR : Interpolator.EASE_OUT);
+            rotation.setFromAngle(angle);
+            angle += speed;
+            rotation.setToAngle(angle);
+            animation.getChildren().add(rotation);
+            speed -= step;
+        }
+
+        animation.setOnFinished(ev -> {
+            // handler is run in main loop, outside of animation to overcome limitations of IllegalState
+            Platform.runLater(() -> {
+                double a = wheel.getRotate() % 360.0;
+                int index = SEGMENTS - 1 - (int) Math.floor(a / (360.0 / SEGMENTS));
+                onEnd.accept(scoreOfSegment[index]);
+            });
+        });
+
+        animation.play();
+    }
 
     private Node createWheelArc(double angle, int index, Color c) {
 
@@ -92,86 +171,6 @@ class Game extends WheelOfFortune {
         }
 
         return wheel;
-    }
-
-    private void rollWheel(final Node wheel, final Consumer<Integer> onEnd) {
-
-        SequentialTransition animation = new SequentialTransition();
-
-        double angle = wheel.getRotate();
-        double step = 15 + 5 * Math.random();
-        double speed = 20 * step;
-
-        for (int k = 1; k <= 20; k++) {
-
-            final RotateTransition rotation = new RotateTransition(Duration.millis(50 + 10 * k), wheel);
-            rotation.setInterpolator(k < 20 ? Interpolator.LINEAR : Interpolator.EASE_OUT);
-            rotation.setFromAngle(angle);
-            angle += speed;
-            rotation.setToAngle(angle);
-            animation.getChildren().add(rotation);
-            speed -= step;
-        }
-
-        animation.setOnFinished(ev -> {
-            // handler is run in main loop, outside of animation to overcome limitations of IllegalState
-            Platform.runLater(() -> {
-                double a = wheel.getRotate() % 360.0;
-                int index = SEGMENTS - 1 - (int) Math.floor(a / (360.0 / SEGMENTS));
-                onEnd.accept(scoreOfSegment[index]);
-            });
-        });
-
-        animation.play();
-    }
-
-    Stage createGameScreen() {
-
-        final BorderPane root = new BorderPane();
-
-        root.setTop(centered(
-                withMargin(createLetterPane(), 20)));
-
-        final Node wheel = createWheel();
-        root.setCenter(new Group(wheel, createIndicator()));
-
-        final Button rollButton = new Button("Roll!");
-        rollButton.setPrefSize(200, 50);
-        rollButton.setFont(Font.font(30));
-        rollButton.setOnAction(event -> {
-
-            rollButton.setDisable(true);
-            rollWheel(wheel, score -> {
-
-                switch (nextTurn(askForLetter(), score)) {
-                    case WIN:
-                        new Alert(Alert.AlertType.NONE,
-                                "You have Won! Your score is " + scoreProperty().get(),
-                                ButtonType.OK).showAndWait();
-                        break;
-                    case LOOSE:
-                        new Alert(Alert.AlertType.WARNING,
-                                "You have lost! Your score is " + scoreProperty().get(),
-                                ButtonType.OK).showAndWait();
-                }
-
-                rollButton.setDisable(false);
-            });
-        });
-
-        final VBox box = new VBox(createScoreLabel(), rollButton);
-        box.setSpacing(20);
-        box.setAlignment(Pos.CENTER);
-        root.setBottom(withMargin(new BorderPane(box), 20));
-
-        final Stage stage = new Stage();
-        final Scene scene = new Scene(root, 480, 640);
-        stage.setTitle("Have fun!");
-        stage.setScene(scene);
-        stage.setMinHeight(500);
-        stage.setMinWidth(500);
-
-        return stage;
     }
 
     private Node createScoreLabel() {
