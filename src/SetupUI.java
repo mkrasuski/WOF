@@ -1,4 +1,3 @@
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -34,11 +33,13 @@ class SetupUI implements UITools {
                     vbox(Pos.TOP_LEFT,
                             new Label("Library secrets"),
                             leftList),
-                    childMaxWidth(vbox(Pos.CENTER,
+
+                    wideChildren(vbox(Pos.CENTER,
                             ltrButton,
                             rtlButton,
                             addButton,
                             playButton)),
+
                     vbox(Pos.TOP_LEFT,
                             new Label("Secrets for game"),
                             rightList))));
@@ -56,7 +57,7 @@ class SetupUI implements UITools {
                         rightList.getSelectionModel().getSelectedItems()));
 
         addButton.setOnAction(
-                ev -> library.add(asForNewSecret()));
+                ev -> library.add(askForNewSecret()));
 
         playButton.setOnAction(
                 ev -> play(rightList.getItems()));
@@ -77,7 +78,7 @@ class SetupUI implements UITools {
         new GameUI(game).createGameScreen().show();
     }
 
-    private String asForNewSecret() {
+    private String askForNewSecret() {
         return askForInput("Insert new secret", "Add to library", str -> {
             if (str.length() < 3) return "Secret has to have at least 3 characters...";
             return null;

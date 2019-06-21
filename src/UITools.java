@@ -85,7 +85,7 @@ public interface UITools {
         return Bindings.createBooleanBinding(test, props);
     }
 
-    default Node childMaxWidth(Pane node) {
+    default Node wideChildren(Pane node) {
         for (Node ch : node.getChildren()) {
             if (ch instanceof Control) {
                 ((Control) ch).setMaxWidth(Double.MAX_VALUE);
