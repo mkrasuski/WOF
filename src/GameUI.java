@@ -3,12 +3,14 @@ import javafx.animation.RotateTransition;
 import javafx.animation.SequentialTransition;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
@@ -19,13 +21,11 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import javafx.scene.transform.Rotate;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.util.Random;
 import java.util.function.Consumer;
-import java.util.function.Function;
 
 class GameUI implements UITools {
 

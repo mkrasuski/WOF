@@ -3,7 +3,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.stage.Stage;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.Locale;
 
@@ -16,21 +18,21 @@ public class App extends Application {
     }
 
     private ObservableList<String> loadLibrary(String fileName) {
-        ObservableList<String> lib = FXCollections.observableArrayList();
+        ObservableList<String> library = FXCollections.observableArrayList();
         try {
-            BufferedReader in = new BufferedReader(new FileReader(fileName, Charset.forName("UTF-8")));
-            String str;
+            var in = new BufferedReader(new FileReader(fileName, Charset.forName("UTF-8")));
+
             while (true) {
-                str = in.readLine();
+                var str = in.readLine();
                 if (str != null)
-                    lib.add(str.trim());
+                    library.add(str.trim());
                 else
                     break;
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return lib;
+        return library;
     }
 
     public static void main(String[] args) {
