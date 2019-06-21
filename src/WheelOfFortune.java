@@ -17,7 +17,7 @@ class WheelOfFortune {
     /**
      * secretProperty stores secret to guess
      */
-    private StringProperty secret = new SimpleStringProperty("");
+    private final StringProperty secret = new SimpleStringProperty("");
 
     StringProperty secretProperty() {
         return secret;
@@ -26,7 +26,7 @@ class WheelOfFortune {
     /**
      * guessProperty stores current state of guessed letters or space if letter is unknown
      */
-    private StringProperty guess = new SimpleStringProperty("");
+    private final StringProperty guess = new SimpleStringProperty("");
 
     StringProperty guessProperty() {
         return guess;
@@ -35,7 +35,7 @@ class WheelOfFortune {
     /**
      * scoreProperty stores current score
      */
-    private IntegerProperty score = new SimpleIntegerProperty(0);
+    private final IntegerProperty score = new SimpleIntegerProperty(0);
 
     IntegerProperty scoreProperty() {
         return score;
@@ -44,7 +44,7 @@ class WheelOfFortune {
     /**
      * faultsProperty stores number of faults. Player looses after 3 faults
      */
-    private IntegerProperty faults = new SimpleIntegerProperty(0);
+    private final IntegerProperty faults = new SimpleIntegerProperty(0);
 
     IntegerProperty faultsProperty() {
         return faults;
