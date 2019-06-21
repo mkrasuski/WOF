@@ -11,22 +11,19 @@ import java.util.Random;
 
 class SetupUI implements UITools {
 
-    private ObservableList<String> library;
-
-    SetupUI(ObservableList<String> library) {
-        this.library = library;
+    SetupUI() {
     }
 
-    Stage createSetupScreen() {
-        final BorderPane root = new BorderPane();
+    Stage createSetupScreen(ObservableList<String> library) {
+        final var root = new BorderPane();
 
-        final ListView<String> leftList = new ListView<>(library);
-        final ListView<String> rightList = new ListView<>();
+        final var leftList = new ListView<>(library);
+        final var rightList = new ListView<String>();
 
-        final Button ltrButton = new Button(">");
-        final Button rtlButton = new Button("<");
-        final Button addButton = new Button("Add to library");
-        final Button playButton = new Button("Play!");
+        final var ltrButton = new Button(">");
+        final var rtlButton = new Button("<");
+        final var addButton = new Button("Add to library");
+        final var playButton = new Button("Play!");
 
         root.setCenter(withMargin(
                 hbox(Pos.CENTER,
@@ -45,13 +42,13 @@ class SetupUI implements UITools {
                             rightList))));
 
         ltrButton.setOnAction(
-                ev -> moveSelected(leftList, rightList));
+                ev -> moveSelectedItems(leftList, rightList));
         ltrButton.disableProperty().bind(
                 checkIf(() -> leftList.getSelectionModel().getSelectedItems().size() == 0,
                         leftList.getSelectionModel().getSelectedItems()));
 
         rtlButton.setOnAction(
-                ev -> moveSelected(rightList, leftList));
+                ev -> moveSelectedItems(rightList, leftList));
         rtlButton.disableProperty().bind(
                 checkIf(() -> rightList.getSelectionModel().getSelectedItems().size() == 0,
                         rightList.getSelectionModel().getSelectedItems()));
@@ -65,7 +62,7 @@ class SetupUI implements UITools {
                 checkIf(() -> rightList.getItems().size() == 0,
                         rightList.getItems()));
 
-        final Stage stage = new Stage();
+        final var stage = new Stage();
         stage.setScene(new Scene(root));
 
         return stage;
@@ -79,14 +76,17 @@ class SetupUI implements UITools {
     }
 
     private String askForNewSecret() {
-        return askForInput("Insert new secret", "Add to library", str -> {
-            if (str.length() < 3) return "Secret has to have at least 3 characters...";
-            return null;
-        });
+
+        return askForInput("Insert new secret", "Add to library",
+                str -> {
+                    if (str.length() < 3) return "Secret has to have at least 3 characters...";
+                    return null;
+                });
     }
 
-    private void moveSelected(ListView<String> fromList, ListView<String> toList) {
-        ObservableList<String> selectedItems = fromList.getSelectionModel().getSelectedItems();
+    private void moveSelectedItems(ListView<String> fromList, ListView<String> toList) {
+
+        var selectedItems = fromList.getSelectionModel().getSelectedItems();
         if (selectedItems.size() > 0) {
             toList.getItems().addAll(selectedItems);
             fromList.getItems().removeAll(selectedItems);

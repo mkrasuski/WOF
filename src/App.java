@@ -12,7 +12,7 @@ public class App extends Application {
     @Override
     public void start(Stage primaryStage) {
 
-        new SetupUI(loadLibrary("data.txt")).createSetupScreen().show();
+        new SetupUI().createSetupScreen(loadLibrary("data.txt")).show();
     }
 
     private ObservableList<String> loadLibrary(String fileName) {

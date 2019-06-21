@@ -38,12 +38,12 @@ public interface UITools {
 
     default String askForInput(String promptText, String buttonText, Function<String, String> validate) {
 
-        final Stage stage = new Stage();
-        final BorderPane root = new BorderPane();
+        final var stage = new Stage();
+        final var root = new BorderPane();
 
-        final TextField field = new TextField();
-        final Label label = new Label(promptText);
-        final Button button = new Button(buttonText);
+        final var field = new TextField();
+        final var label = new Label(promptText);
+        final var button = new Button(buttonText);
 
         button.setDefaultButton(true);
         button.setOnAction(ev -> {
@@ -68,14 +68,14 @@ public interface UITools {
     }
 
     default Node hbox(Pos pos, Node ...nodes) {
-        final HBox box = new HBox(nodes);
+        final var box = new HBox(nodes);
         box.setSpacing(8);
         box.setAlignment(pos);
         return box;
     }
 
     default Pane vbox(Pos pos, Node ...nodes) {
-        final VBox box = new VBox(nodes);
+        final var box = new VBox(nodes);
         box.setSpacing(8);
         box.setAlignment(pos);
         return box;
@@ -86,7 +86,7 @@ public interface UITools {
     }
 
     default Node wideChildren(Pane node) {
-        for (Node ch : node.getChildren()) {
+        for (var ch : node.getChildren()) {
             if (ch instanceof Control) {
                 ((Control) ch).setMaxWidth(Double.MAX_VALUE);
             }
